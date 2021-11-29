@@ -1,9 +1,14 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
+const helmet = require('helmet');
 
 const sauceRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
-mongoose.connect('mongodb+srv://Arlyms:Arlyms_01@cluster0.wodye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+
+
+mongoose.connect(process.env.CONNEXION_STRING,
 { useNewUrlParser: true, 
   useUnifiedTopology: true })
 .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -23,7 +28,11 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+app.use(helmet()); // Truc de securité ? 
+
+app.use ('/images', express.static(path.join(__dirname,'images'))),
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
 module.exports = app;
+
