@@ -2,7 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); // package création et verification de token 
 const User = require('../models/User');
 
-exports.signup = (req, res, next) => { // enregistrement de nouveau utilisateurs
+// enregistrement de nouveau utilisateurs
+exports.signup = (req, res, next) => { 
     bcrypt.hash(req.body.password, 10) // hash = crypter le mot de passe 
         .then(hash => {
         const user = new User({
@@ -16,7 +17,8 @@ exports.signup = (req, res, next) => { // enregistrement de nouveau utilisateurs
         .catch(error => res.status(500).json({ error })); // 500 erreur server
 };
 
-exports.login = (req, res, next) => { // connecter des utilisateurs existants 
+// Connecter les utilisateurs existants 
+exports.login = (req, res, next) => { 
     User.findOne({ email: req.body.email }) // trouver un utilisateur 
     .then(user => {
       if (!user) {

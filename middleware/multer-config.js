@@ -1,5 +1,6 @@
 const multer = require('multer');
 
+// Téléchargement d'images 
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
@@ -8,7 +9,7 @@ const MIME_TYPES = {
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, 'images'); // null = pas eu d'erreur apparement 
+    callback(null, 'images'); 
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(' ').join('_'); 
